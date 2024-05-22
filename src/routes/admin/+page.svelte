@@ -18,7 +18,7 @@
 			type="number"
 			helperText="Number from 1-5"
 		/>
-		<Input id="create-path" name="path" label="Path" />
+		<Input id="create-path" name="path" label="Path" helperText="Don't include / at beginning" />
 	</div>
 	<Textarea name="content" id="create-content" label="Content" />
 	<Textarea name="book-summary" id="create-book-summary" label="Book Summary" />

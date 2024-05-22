@@ -5,7 +5,7 @@
 	export let dateCreated: Date;
 </script>
 
-<a href={path} class="group mb-6 block">
+<a href={`posts/${path}`} class="group mb-6 block">
 	<p>
 		<span class="font-medium text-primary-main group-hover:text-primary-light">{bookTitle}</span>
 		<span class="font-medium">by {author}</span>
