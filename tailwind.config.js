@@ -10,7 +10,9 @@ export default {
 					dark: 'rgb(0, 59, 10)'
 				},
 				nav: '#838456',
-				background: '#EFEEE3'
+				background: '#EFEEE3',
+				heading: '#27271D',
+				gray: '#414141'
 			},
 			fontFamily: {
 				sans: '"Poppins", sans-serif'
