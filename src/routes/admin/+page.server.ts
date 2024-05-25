@@ -16,17 +16,23 @@ export const actions: Actions = {
 		const content = data.get('content');
 		const rating = data.get('rating');
 		const path = data.get('path');
+		const bookSummary = data.get('book-summary');
 
 		const res = await fetch(
 			`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}&key=${GOOGLE_BOOKS_API_KEY}`
 		);
 		const bookDetails = (await res.json()).items[0].volumeInfo;
+		const coverResponse = await fetch(
+			`http://bookcover.longitood.com/bookcover?book_title=${bookDetails.title}&author_name=${bookDetails.authors[0]}`
+		);
+		const { url } = await coverResponse.json();
 
 		const book = new Book({
 			title: bookDetails.title,
-			description: bookDetails.description,
+			description: bookSummary,
 			author: bookDetails.authors[0],
 			publishDate: bookDetails.publishedDate,
+			coverUrl: url,
 			genres: ['test']
 		});
 

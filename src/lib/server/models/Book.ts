@@ -6,13 +6,15 @@ export interface IBook {
 	genres: string[];
 	description: string;
 	publishDate: Date;
+	coverUrl: string;
 }
 export const BookSchema = new mongoose.Schema<IBook>({
 	title: String,
 	author: String,
 	genres: [String],
 	description: String,
-	publishDate: { type: Date }
+	publishDate: { type: Date },
+	coverUrl: String
 });
 
 const Book = mongoose.model<IBook>('Book', BookSchema);
