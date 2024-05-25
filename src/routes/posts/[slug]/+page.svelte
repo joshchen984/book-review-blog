@@ -25,8 +25,10 @@
 
 <h1 class="text-2xl font-bold text-heading">{data.book.title} by {data.book.author}</h1>
 Posted {data.dateCreated.toDateString()}
-<div class="mb-5 flex flex-col items-center gap-5">
-	<div>
+<div class="mb-5 md:mb-11">
+	<div
+		class="float-top mx-auto mb-5 flex flex-col items-center bg-background sm:float-left sm:mr-5 sm:p-5"
+	>
 		<img class="mb-2" src={data.book.coverUrl} alt="Book cover" />
 		<div class="flex">
 			<span class="mr-2 items-center">My rating:</span>
