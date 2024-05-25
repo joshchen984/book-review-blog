@@ -5,7 +5,12 @@
 	export let data: PageData;
 </script>
 
-<h1 class="mb-8 text-4xl font-bold text-heading">Book Reviews</h1>
+<div class="mb-8">
+	<h1 class="mb-1 text-4xl font-bold text-heading">Book Reviews</h1>
+	{#if data.query !== ''}
+		Results for "{data.query}"
+	{/if}
+</div>
 
 {#each data.posts as post}
 	<ReviewLink
