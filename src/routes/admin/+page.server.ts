@@ -31,7 +31,7 @@ export const actions: Actions = {
 			author: bookDetails.authors[0],
 			publishDate: bookDetails.publishedDate,
 			coverUrl: url,
-			genres: ['test']
+			genres: []
 		});
 
 		await book.save();
