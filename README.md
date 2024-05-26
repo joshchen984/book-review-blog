@@ -1,5 +1,7 @@
 # Book Review Blog
 
+* Deployed at [blog.joshchen984.com](https://blog.joshchen984.com)
+
 Created using SvelteKit and TailwindCSS
 
 Admin route is /admin and login route is /admin/login
@@ -22,6 +24,9 @@ npm run check
 ```
 ## Deploy
 
+* Deployed on Vercel
+* Domain managed by Netlify
+* Database hosted on MongoDB Atlas
 ```
 npm run build
 npm run preview
