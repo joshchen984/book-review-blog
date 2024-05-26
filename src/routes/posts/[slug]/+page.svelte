@@ -23,6 +23,11 @@
 	export let data: PageData;
 </script>
 
+<svelte:head>
+	<title>{data.book.title} by {data.book.author} Book Review | Josh's Book Review Blog</title>
+	<meta name="description" content={data.content} />
+</svelte:head>
+
 <h1 class="text-2xl font-bold text-heading">{data.book.title} by {data.book.author}</h1>
 Posted {data.dateCreated.toDateString()}
 <div class="mb-5 md:mb-11">
