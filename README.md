@@ -15,3 +15,14 @@ ADMIN_TOKEN=
 ```
 
 Set ADMIN_TOKEN to a random string.
+
+If types aren't updated run
+```
+npm run check
+```
+## Deploy
+
+```
+npm run build
+npm run preview
+```
