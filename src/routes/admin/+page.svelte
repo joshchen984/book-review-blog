@@ -1,11 +1,15 @@
 <script lang="ts">
-	import type { PageData, ActionData } from './$types';
 	import Input from '$lib/input.svelte';
 	import Textarea from '$lib/textarea.svelte';
-
-	export let data: PageData;
-	export let form: ActionData;
 </script>
+
+<form method="POST" action="?/logout">
+	<button
+		type="submit"
+		class="w-48 rounded-full bg-primary-main p-2 text-white shadow-xl hover:bg-primary-light"
+		>Logout</button
+	>
+</form>
 
 <form method="POST" action="?/createPost" class="flex flex-col items-center">
 	<div class="mb-5 flex h-80 w-full flex-col justify-between">
@@ -28,4 +32,3 @@
 		>Submit</button
 	>
 </form>
-{form?.title}

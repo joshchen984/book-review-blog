@@ -1,12 +1,10 @@
-import type { PageServerLoad, Actions } from './$types';
+import type { Actions } from './$types';
 import { GOOGLE_BOOKS_API_KEY } from '$env/static/private';
 
 import Post, { postToJson } from '$lib/server/models/Post';
 import Book from '$lib/server/models/Book';
-
-export const load = (async () => {
-	return {};
-}) satisfies PageServerLoad;
+import { logout } from '$lib/server/auth';
+import { redirect } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	createPost: async ({ request }) => {
@@ -46,5 +44,9 @@ export const actions: Actions = {
 			book
 		});
 		return postToJson(post);
+	},
+	logout: ({ cookies }) => {
+		logout(cookies);
+		throw redirect(303, '/');
 	}
 };
