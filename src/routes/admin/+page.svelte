@@ -21,6 +21,11 @@
 			label="Rating"
 			type="number"
 			helperText="Number from 1-5"
+			inputProps={{
+				min: 0,
+				max: 5,
+				step: .5
+			}}
 		/>
 		<Input id="create-path" name="path" label="Path" helperText="Don't include / at beginning" />
 	</div>

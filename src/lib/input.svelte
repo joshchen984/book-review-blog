@@ -4,6 +4,7 @@
 	export let label: string;
 	export let helperText: string = '';
 	export let type: string = 'text';
+	export let inputProps: object = {};
 </script>
 
 <div class="group relative w-full">
@@ -16,6 +17,7 @@
 		{id}
 		{type}
 		{name}
+		{...inputProps}
 		class="peer h-10 w-full rounded-md bg-gray-50 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
 	/>
 	{#if helperText !== ''}

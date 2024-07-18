@@ -20,7 +20,7 @@ export const load = (async ({ url }) => {
 			author: post.book.author,
 			path: post.path,
 			dateCreated: post.dateCreated
-		})),
+		})).sort((a,b) => b.dateCreated.getTime() - a.dateCreated.getTime()),
 		query: originalQuery
 	};
 }) satisfies PageServerLoad;
