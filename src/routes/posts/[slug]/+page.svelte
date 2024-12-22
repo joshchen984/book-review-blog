@@ -34,7 +34,7 @@ Posted {data.dateCreated.toDateString()}
 	<div
 		class="float-top mx-auto mb-5 flex flex-col items-center bg-background sm:float-left sm:mr-5 sm:p-5"
 	>
-		<img class="mb-2" src={data.book.coverUrl} alt="Book cover" />
+		<img class="mb-2 w-4/5 max-w-xl sm:w-full" src={data.book.coverUrl} alt="Book cover" />
 		<div class="flex">
 			<span class="mr-2 items-center">My rating:</span>
 			<Stars {config} />
