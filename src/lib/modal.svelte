@@ -1,9 +1,12 @@
 <script lang="ts">
+	export let onEnter: () => void = () => {};
 	let visible = false;
 
 	function keyPress(e: KeyboardEvent) {
 		if (e.key == 'Escape') {
 			close();
+		} else if (e.key == 'Enter') {
+			onEnter();
 		}
 	}
 
