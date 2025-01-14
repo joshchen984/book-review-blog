@@ -48,7 +48,7 @@
 				id="newsletter-email"
 				type="email"
 				name="email"
-				class=" h-10 w-1/2 border border-gray px-4 font-thin"
+				class=" h-10 w-1/2 border border-gray bg-background px-4 font-thin"
 				bind:value={email}
 			/>
 			{#if message !== ''}

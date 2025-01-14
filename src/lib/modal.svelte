@@ -35,7 +35,7 @@
 	<div class="fixed left-0 top-0 z-40 h-full w-full bg-black/50" on:click={close} role="dialog">
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div
-			class="relative left-1/2 top-1/2 z-50 w-full max-w-screen-sm translate-x-[-50%] translate-y-[-50%] bg-white p-4"
+			class="relative left-1/2 top-1/2 z-50 w-full max-w-screen-sm translate-x-[-50%] translate-y-[-50%] bg-background p-4"
 			on:click|stopPropagation={() => {}}
 		>
 			<button class="float-right text-xl hover:font-bold" on:click={close}>&times;</button>
