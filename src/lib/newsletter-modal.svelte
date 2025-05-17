@@ -51,6 +51,7 @@
 				class=" h-10 w-1/2 border border-gray bg-background px-4 font-thin"
 				bind:value={email}
 			/>
+			<p>Get notified on new book reviews!</p>
 			{#if message !== ''}
 				{#if isError}
 					<p class="text-red-500">{message}</p>

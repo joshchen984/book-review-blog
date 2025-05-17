@@ -3,7 +3,8 @@
 	import Stars from '$lib/stars.svelte';
 	import type { PageData } from './$types';
 	import MarkdownParagraph from './markdown-paragraph.svelte';
-
+	import MarkdownOrderedListItem from './markdown-ordered-list-item.svelte';
+	import MarkdownList from './markdown-list.svelte';
 	$: config = {
 		readOnly: true,
 		countStars: 5,
@@ -18,8 +19,11 @@
 		}
 	};
 	const renderers: Partial<Renderers> = {
-		paragraph: MarkdownParagraph
+		paragraph: MarkdownParagraph,
+		list: MarkdownList,
+		orderedlistitem: MarkdownOrderedListItem
 	};
+
 	export let data: PageData;
 </script>
 
