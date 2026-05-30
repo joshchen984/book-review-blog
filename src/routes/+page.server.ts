@@ -15,12 +15,19 @@ export const load = (async ({ url }) => {
 			post.book.author.toLowerCase().includes(query)
 	);
 	return {
-		posts: filteredPosts.map((post) => ({
-			bookTitle: post.book.title,
-			author: post.book.author,
-			path: post.path,
-			dateCreated: post.dateCreated
-		})).sort((a,b) => b.dateCreated.getTime() - a.dateCreated.getTime()),
+		posts: filteredPosts
+			.map((post) => ({
+				bookTitle: post.book.title,
+				author: post.book.author,
+				path: post.path,
+				dateCreated: post.dateCreated,
+				rating: post.rating,
+				description: post.book.description,
+				coverUrl: post.book.coverUrl,
+				genres: post.book.genres ?? [],
+				publishDate: post.book.publishDate
+			}))
+			.sort((a, b) => b.dateCreated.getTime() - a.dateCreated.getTime()),
 		query: originalQuery
 	};
 }) satisfies PageServerLoad;
