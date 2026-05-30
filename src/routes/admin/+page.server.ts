@@ -4,7 +4,30 @@ import { GOOGLE_BOOKS_API_KEY } from '$env/static/private';
 import Post, { postToJson } from '$lib/server/models/Post';
 import Book from '$lib/server/models/Book';
 import { logout } from '$lib/server/auth';
-import { redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
+
+type VolumeInfo = {
+	title: string;
+	authors: string[];
+	publishedDate?: string;
+	industryIdentifiers?: { type: string; identifier: string }[];
+};
+
+function isbn(info: VolumeInfo) {
+	const ids = info.industryIdentifiers ?? [];
+	return (
+		ids.find((i) => i.type === 'ISBN_13')?.identifier ??
+		ids.find((i) => i.type === 'ISBN_10')?.identifier
+	);
+}
+
+function normalizeIsbn(isbn: string) {
+	return isbn.replace(/[-\s]/g, '');
+}
+
+function coverUrl(isbn: string) {
+	return `https://covers.openlibrary.org/b/isbn/${normalizeIsbn(isbn)}-L.jpg`;
+}
 
 export const actions: Actions = {
 	createPost: async ({ request }) => {
@@ -17,20 +40,20 @@ export const actions: Actions = {
 		const bookSummary = data.get('book-summary');
 
 		const res = await fetch(
-			`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}&key=${GOOGLE_BOOKS_API_KEY}`
+			`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(bookTitle as string)}&key=${GOOGLE_BOOKS_API_KEY}`
 		);
-		const bookDetails = (await res.json()).items[0].volumeInfo;
-		const coverResponse = await fetch(
-			`http://bookcover.longitood.com/bookcover?book_title=${bookDetails.title}&author_name=${bookDetails.authors[0]}`
-		);
-		const { url } = await coverResponse.json();
+		const bookDetails = (await res.json()).items[0].volumeInfo as VolumeInfo;
+		const bookIsbn = isbn(bookDetails);
+		if (!bookIsbn) {
+			return fail(404, { message: 'No ISBN found for that book.' });
+		}
 
 		const book = new Book({
 			title: bookDetails.title,
 			description: bookSummary,
 			author: bookDetails.authors[0],
 			publishDate: bookDetails.publishedDate,
-			coverUrl: url,
+			coverUrl: coverUrl(bookIsbn),
 			genres: []
 		});
 
