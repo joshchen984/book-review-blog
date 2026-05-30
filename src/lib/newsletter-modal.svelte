@@ -38,32 +38,33 @@
 </script>
 
 <Modal bind:this={modalRef} onEnter={subscribe}>
-	<div class="m-0 flex h-full w-full flex-col items-center justify-center">
-		<h2 class="mb-8 text-xl font-bold text-heading">Subscribe to the Newsletter</h2>
-		<div class="mb-4 flex w-full flex-col items-center">
-			<label for="newsletter-email" class="text-gray-500 block w-1/2 pb-1 text-sm font-medium"
-				>Email</label
-			>
+	<div class="flex h-full w-full flex-col items-center justify-center p-4">
+		<h2 class="mb-8 font-display text-2xl font-normal text-ink">Subscribe to the Newsletter</h2>
+		<div class="mb-4 flex w-full max-w-sm flex-col items-center">
+			<label for="newsletter-email" class="mb-1 block w-full pb-1 font-sans text-sm text-muted">
+				Email
+			</label>
 			<input
 				id="newsletter-email"
 				type="email"
 				name="email"
-				class=" h-10 w-1/2 border border-gray bg-background px-4 font-thin"
+				class="h-10 w-full rounded-md border border-line bg-bg px-4 font-sans text-sm text-ink focus:border-ink focus:outline-none"
 				bind:value={email}
 			/>
-			<p>Get notified on new book reviews!</p>
+			<p class="mt-2 font-sans text-sm text-muted">Get notified on new book reviews!</p>
 			{#if message !== ''}
 				{#if isError}
-					<p class="text-red-500">{message}</p>
+					<p class="mt-2 font-sans text-sm text-accent">{message}</p>
 				{:else}
-					<p class="text-green-500">{message}</p>
+					<p class="mt-2 font-sans text-sm text-[#1a5020]">{message}</p>
 				{/if}
 			{/if}
 		</div>
 		<button
 			on:click={subscribe}
-			class="w-48 rounded-full bg-primary-main p-2 text-white shadow-xl hover:bg-primary-light"
-			>Subscribe</button
+			class="w-48 rounded-md border border-accent bg-transparent px-4 py-2 font-sans text-sm font-medium text-accent transition-colors hover:bg-accent-bg"
 		>
+			Subscribe
+		</button>
 	</div>
 </Modal>

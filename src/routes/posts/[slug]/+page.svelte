@@ -9,13 +9,16 @@
 		readOnly: true,
 		countStars: 5,
 		score: data.rating,
+		showScore: false,
+		name: 'review-stars',
+		scoreFormat: () => '',
 		range: { min: 0, max: 5, step: 0.5 },
 		starConfig: {
 			size: 20,
-			fillColor: '#01550F',
-			strokeColor: '#01550F',
-			unfilledColor: '#FFF',
-			strokeUnfilledColor: '#01550F'
+			fillColor: '#c0392b',
+			strokeColor: '#c0392b',
+			unfilledColor: '#faf7f2',
+			strokeUnfilledColor: '#c0392b'
 		}
 	};
 	const renderers: Partial<Renderers> = {
@@ -32,20 +35,39 @@
 	<meta name="description" content={data.content} />
 </svelte:head>
 
-<h1 class="text-2xl font-bold text-heading">{data.book.title} by {data.book.author}</h1>
-Posted {data.dateCreated.toDateString()}
-<div class="mb-5 md:mb-11">
-	<div
-		class="float-top mx-auto mb-5 flex flex-col items-center bg-background sm:float-left sm:mr-5 sm:p-5"
-	>
-		<img class="mb-2 w-4/5 max-w-xl sm:w-full" src={data.book.coverUrl} alt="Book cover" />
-		<div class="flex">
-			<span class="mr-2 items-center">My rating:</span>
-			<Stars {config} />
+<article>
+	<header class="mb-8 border-b border-line pb-6">
+		<p class="label mb-2 font-sans text-[11px] font-medium uppercase tracking-widest text-hint">
+			Review
+		</p>
+		<h1 class="font-display text-3xl font-normal text-ink">
+			{data.book.title}
+		</h1>
+		<p class="mt-1 font-sans text-sm text-muted">by {data.book.author}</p>
+		<p class="mt-2 font-sans text-xs text-hint">Posted {data.dateCreated.toDateString()}</p>
+	</header>
+
+	<div class="mb-8 rounded-lg border border-line bg-surface p-5 md:mb-12">
+		<div
+			class="mb-5 flex flex-col items-center gap-4 sm:float-left sm:mb-0 sm:mr-6 sm:items-start"
+		>
+			<img
+				class="w-40 max-w-full rounded-md shadow-sm"
+				src={data.book.coverUrl}
+				alt="Cover of {data.book.title}"
+			/>
+			<div class="flex items-center gap-2">
+				<span class="font-sans text-xs text-muted">My rating</span>
+				<Stars {config} />
+			</div>
 		</div>
+		<p class="whitespace-pre-line font-body text-base leading-loose text-ink">
+			{data.book.description}
+		</p>
+		<div class="clear-both"></div>
 	</div>
-	<p class="whitespace-pre-line rounded-md bg-[#DCDCDC] p-5">
-		{data.book.description}
-	</p>
-</div>
-<SvelteMarkdown source={data.content} options={{ breaks: true }} {renderers} />
+
+	<div class="prose clear-both font-body text-base leading-loose text-ink">
+		<SvelteMarkdown source={data.content} options={{ breaks: true }} {renderers} />
+	</div>
+</article>

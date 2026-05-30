@@ -11,11 +11,21 @@
 	box-sizing: border-box;
 }
 
+html {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
 html,
 body {
 	min-height: 100vh;
 	margin: 0;
 	padding: 0;
+	font-family: 'DM Sans', system-ui, sans-serif;
+	color: #1a1208;
+	background-color: #faf7f2;
+	line-height: 1.6;
 }
 
 li {

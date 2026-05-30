@@ -11,14 +11,26 @@
 	}
 </script>
 
-<nav
-	class="fixed top-0 z-30 flex h-20 w-screen flex-col items-center justify-around bg-nav shadow-sm shadow-nav sm:h-14 sm:flex-row sm:justify-end sm:px-8"
->
-	<a href="/" class="sm:mr-5">Home</a>
-	<button on:click={() => modal.open()} class="sm:mr-5">Subscribe to the Newsletter</button>
-	<form on:submit|preventDefault={handleSearch} class="w-5/6 sm:max-w-96">
-		<input class="w-full rounded-2xl px-4 py-0.5" placeholder="Search" bind:value={query} />
-	</form>
-</nav>
+<header class="fixed top-0 z-30 w-full border-b border-line bg-bg/95 backdrop-blur-sm">
+	<nav class="mx-auto flex max-w-[960px] flex-col items-center gap-3 px-6 py-4 sm:flex-row sm:justify-between sm:px-8">
+		<a href="/" class="font-display text-xl italic text-ink no-underline">Josh's Book Blog</a>
+		<div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+			<button
+				type="button"
+				on:click={() => modal.open()}
+				class="rounded-full border border-accent bg-accent px-4 py-1.5 font-sans text-xs font-semibold text-white shadow-sm transition-colors hover:border-accent-text hover:bg-accent-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+			>
+				Subscribe
+			</button>
+			<form on:submit|preventDefault={handleSearch} class="w-full min-w-[180px] sm:w-48">
+				<input
+					class="w-full rounded-full border border-line bg-surface px-3 py-1 font-sans text-xs text-ink placeholder:text-hint focus:border-ink focus:outline-none"
+					placeholder="Search books…"
+					bind:value={query}
+				/>
+			</form>
+		</div>
+	</nav>
+</header>
 
 <NewsletterModal bind:this={modal} />

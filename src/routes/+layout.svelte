@@ -5,6 +5,8 @@
 </script>
 
 <Nav />
-<div class="min-h-screen w-full bg-background px-5 pb-5 pt-32 sm:px-20 md:px-40 lg:px-60 xl:px-96">
-	<slot></slot>
+<div class="min-h-screen w-full bg-bg px-6 pb-8 pt-40 sm:px-8 sm:pt-24">
+	<div class="mx-auto max-w-[960px]">
+		<slot></slot>
+	</div>
 </div>
