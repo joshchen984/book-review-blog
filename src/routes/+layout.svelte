@@ -1,18 +1,17 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { afterNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import { initAnalytics, isAnalyticsEnabled, trackPageView } from '$lib/analytics';
+	import { isAnalyticsEnabled, trackPageView } from '$lib/analytics';
 	import '../global.css';
 	import '../app.css';
 	import Nav from '$lib/nav.svelte';
 
-	onMount(() => {
-		initAnalytics($page.url.pathname);
-	});
+	if (browser && isAnalyticsEnabled(window.location.pathname)) {
+		trackPageView(window.location.pathname);
+	}
 
-	afterNavigate(({ to }) => {
-		if (to && isAnalyticsEnabled(to.url.pathname)) {
+	afterNavigate(({ from, to }) => {
+		if (from && to && isAnalyticsEnabled(to.url.pathname)) {
 			trackPageView(to.url.pathname);
 		}
 	});

@@ -28,7 +28,7 @@ GA4 is enabled in production only (not in local dev). Admin routes (`/admin/**`)
 
 Events tracked:
 - `page_view` — SPA route changes on public pages
-- `post_view` — individual post pages (`post_slug`, `post_title`)
+- `post_view` — individual post pages (`post_title`)
 - `newsletter_modal_open` — newsletter modal opened (`source_page`)
 - `newsletter_subscribe` — successful newsletter signup (`source_page`)
 

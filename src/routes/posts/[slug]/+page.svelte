@@ -31,8 +31,8 @@
 
 	export let data: PageData;
 
-	$: if (browser && data.path) {
-		trackPostView(data.path, data.book.title);
+	$: if (browser && data.book.title) {
+		trackPostView(data.book.title);
 	}
 </script>
 
