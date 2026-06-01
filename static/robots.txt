@@ -1,2 +1,5 @@
 User-agent: *
 Disallow: /admin
+
+# XML sitemap at /sitemap.xml (dynamic route; lists home and all review pages)
+Sitemap: https://blog.joshchen984.com/sitemap.xml

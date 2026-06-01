@@ -1,7 +1,17 @@
 <script lang="ts">
 	import Stars from '$lib/stars.svelte';
 	import { bookSpineStackStyles } from '$lib/book-spine';
+	import Seo from '$lib/seo.svelte';
+	import { websiteJsonLd } from '$lib/seo';
+	import { page } from '$app/stores';
 	import type { PageData } from './$types';
+
+	const siteTitle = "Josh's Book Review Blog";
+	const siteDescription =
+		"I am a college student who likes to read, and here is where I review the books I've read!";
+
+	// WebSite JSON-LD for sitelinks search box (see $lib/seo.ts).
+	$: websiteLd = websiteJsonLd($page.url.origin, siteTitle);
 
 	export let data: PageData;
 
@@ -84,13 +94,7 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Josh's Book Review Blog</title>
-	<meta
-		name="description"
-		content="I am a college student who likes to read, and here is where I review the books I've read!"
-	/>
-</svelte:head>
+<Seo title={siteTitle} description={siteDescription} type="website" jsonLd={websiteLd} />
 
 <div class="py-4 pb-8">
 	{#if data.query !== ''}

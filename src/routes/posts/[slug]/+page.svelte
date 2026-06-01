@@ -3,6 +3,8 @@
 	import SvelteMarkdown, { type Renderers } from 'svelte-markdown';
 	import { trackPostView } from '$lib/analytics';
 	import Stars from '$lib/stars.svelte';
+	import Seo from '$lib/seo.svelte';
+	import { plainExcerpt, reviewJsonLd } from '$lib/seo';
 	import type { PageData } from './$types';
 	import MarkdownParagraph from './markdown-paragraph.svelte';
 	import MarkdownOrderedListItem from './markdown-ordered-list-item.svelte';
@@ -31,15 +33,30 @@
 
 	export let data: PageData;
 
+	// plainExcerpt + Review JSON-LD for SEO meta and structured data (see $lib/seo.ts).
+	$: pageTitle = `${data.book.title} by ${data.book.author} Book Review | Josh's Book Review Blog`;
+	$: pageDescription = plainExcerpt(data.content);
+	$: reviewLd = reviewJsonLd({
+		bookTitle: data.book.title,
+		bookAuthor: data.book.author,
+		coverUrl: data.book.coverUrl,
+		rating: data.rating,
+		dateCreated: data.dateCreated,
+		reviewBody: plainExcerpt(data.content, 500)
+	});
+
 	$: if (browser && data.book.title) {
 		trackPostView(data.book.title);
 	}
 </script>
 
-<svelte:head>
-	<title>{data.book.title} by {data.book.author} Book Review | Josh's Book Review Blog</title>
-	<meta name="description" content={data.content} />
-</svelte:head>
+<Seo
+	title={pageTitle}
+	description={pageDescription}
+	image={data.book.coverUrl}
+	type="article"
+	jsonLd={reviewLd}
+/>
 
 <article>
 	<header class="mb-8 border-b border-line pb-6">
