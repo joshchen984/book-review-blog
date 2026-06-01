@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import SvelteMarkdown, { type Renderers } from 'svelte-markdown';
+	import { trackPostView } from '$lib/analytics';
 	import Stars from '$lib/stars.svelte';
 	import type { PageData } from './$types';
 	import MarkdownParagraph from './markdown-paragraph.svelte';
@@ -28,6 +30,10 @@
 	};
 
 	export let data: PageData;
+
+	$: if (browser && data.path) {
+		trackPostView(data.path, data.book.title);
+	}
 </script>
 
 <svelte:head>

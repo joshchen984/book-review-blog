@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import { get } from 'svelte/store';
+	import { trackNewsletterModalOpen, trackNewsletterSubscribe } from '$lib/analytics';
 	import Modal from './modal.svelte';
 	import { isValidEmail } from './validation';
 	let modalRef: Modal | null = null;
@@ -10,6 +13,7 @@
 		modalRef?.open();
 		isError = false;
 		message = '';
+		trackNewsletterModalOpen(get(page).url.pathname);
 	};
 
 	const subscribe = async () => {
@@ -26,6 +30,7 @@
 			}
 		});
 		if (res.status === 201) {
+			trackNewsletterSubscribe(get(page).url.pathname);
 			email = '';
 			message = 'Successfully subscribed to newsletter';
 			isError = false;
