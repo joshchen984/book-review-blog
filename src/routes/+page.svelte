@@ -6,17 +6,49 @@
 	export let data: PageData;
 
 	type Post = PageData['posts'][number];
+	type SortField = 'reviewed' | 'rating' | 'published' | 'title' | 'author';
 
 	let selectedPath: string | null = data.posts[0]?.path ?? null;
+	let sortField: SortField = 'reviewed';
+	let sortDir: 'asc' | 'desc' = 'desc';
 
-	$: selectedPost = data.posts.find((post) => post.path === selectedPath) ?? null;
-	$: stackCount = data.posts.length;
+	function toTime(date: Date | string | undefined): number {
+		if (!date) return 0;
+		const parsed = date instanceof Date ? date : new Date(date);
+		return Number.isNaN(parsed.getTime()) ? 0 : parsed.getTime();
+	}
+
+	function compare(a: Post, b: Post, field: SortField): number {
+		switch (field) {
+			case 'rating':
+				return a.rating - b.rating;
+			case 'published':
+				return toTime(a.publishDate) - toTime(b.publishDate);
+			case 'title':
+				return a.bookTitle.localeCompare(b.bookTitle);
+			case 'author':
+				return a.author.localeCompare(b.author);
+			case 'reviewed':
+			default:
+				return a.dateCreated.getTime() - b.dateCreated.getTime();
+		}
+	}
+
+	$: sortedPosts = [...data.posts].sort((a, b) =>
+		sortDir === 'asc' ? compare(a, b, sortField) : -compare(a, b, sortField)
+	);
+	$: selectedPost = sortedPosts.find((post) => post.path === selectedPath) ?? null;
+	$: stackCount = sortedPosts.length;
 	$: stackStyles = bookSpineStackStyles(
-		data.posts.map((post) => ({ title: post.bookTitle, author: post.author }))
+		sortedPosts.map((post) => ({ title: post.bookTitle, author: post.author }))
 	);
 
 	function selectPost(post: Post) {
 		selectedPath = post.path;
+	}
+
+	function toggleSortDir() {
+		sortDir = sortDir === 'asc' ? 'desc' : 'asc';
 	}
 
 	function starsConfig(rating: number) {
@@ -65,11 +97,37 @@
 		<p class="mb-4 font-sans text-sm text-muted">Results for "{data.query}"</p>
 	{/if}
 
+	{#if data.posts.length > 0}
+		<div class="mb-4 flex flex-wrap items-center gap-2">
+			<label for="sort-field" class="font-sans text-xs text-muted">Sort by</label>
+			<select
+				id="sort-field"
+				bind:value={sortField}
+				class="rounded-full border border-line bg-surface px-3 py-1 font-sans text-xs text-ink focus:border-ink focus:outline-none"
+			>
+				<option value="reviewed">Date reviewed</option>
+				<option value="rating">Rating</option>
+				<option value="published">Date published</option>
+				<option value="title">Book title</option>
+				<option value="author">Author</option>
+			</select>
+			<button
+				type="button"
+				on:click={toggleSortDir}
+				class="rounded-full border border-line bg-surface px-3 py-1 font-sans text-xs text-ink transition-colors hover:bg-[#f0ece4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+				aria-label={sortDir === 'asc' ? 'Sort ascending' : 'Sort descending'}
+				title={sortDir === 'asc' ? 'Ascending' : 'Descending'}
+			>
+				{sortDir === 'asc' ? '↑ Asc' : '↓ Desc'}
+			</button>
+		</div>
+	{/if}
+
 	<div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
 		<div
 			class="order-2 lg:order-1 relative flex min-h-[420px] flex-col items-center justify-end rounded-lg bg-[#f0ece4] px-8 pb-4 pt-8"
 		>
-			{#if data.posts.length === 0}
+			{#if sortedPosts.length === 0}
 				<p class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-sans text-sm text-hint">
 					No books in the stack yet.
 				</p>
@@ -78,7 +136,7 @@
 					{stackCount} book{stackCount !== 1 ? 's' : ''} in the stack
 				</p>
 				<div class="flex w-full flex-col items-center gap-0">
-					{#each data.posts as post, i (post.path)}
+					{#each sortedPosts as post, i (post.path)}
 						{@const spine = stackStyles[i]}
 						{@const isActive = selectedPath === post.path}
 						<button
@@ -111,7 +169,7 @@
 			class:hidden={!selectedPost}
 		>
 			{#if selectedPost}
-				{@const selectedIndex = data.posts.findIndex((post) => post.path === selectedPost.path)}
+				{@const selectedIndex = sortedPosts.findIndex((post) => post.path === selectedPost.path)}
 				{@const spine = stackStyles[selectedIndex]}
 				<div class="mb-3.5 h-1.5 w-full rounded-sm" style:background={spine.color}></div>
 				<h2 class="font-display text-base font-normal text-ink">{selectedPost.bookTitle}</h2>
